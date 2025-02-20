@@ -5,5 +5,5 @@ export interface Cliente {
     nome: string;
     sobrenome: string;
     email: Date;
-    orders?: Pedido[];
+    pedidos?: Pedido[];
 }
