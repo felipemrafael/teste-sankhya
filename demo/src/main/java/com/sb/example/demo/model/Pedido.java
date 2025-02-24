@@ -25,11 +25,7 @@ public class Pedido {
 
     private LocalDate dataCompra;
 
-    @ManyToMany
-    @JoinTable(name = "produto_pedido",
-            joinColumns = @JoinColumn(name = "produto_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "pedido_id",
-                    referencedColumnName = "id"))
+    @OneToMany(fetch = FetchType.LAZY)
     private List<Produto> produtos;
 
 }

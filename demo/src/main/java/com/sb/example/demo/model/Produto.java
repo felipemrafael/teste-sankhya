@@ -24,7 +24,4 @@ public class Produto {
 
     private Double preco;
 
-    @ManyToMany(mappedBy = "produtos")
-    private List<Pedido> pedidos;
-
 }
