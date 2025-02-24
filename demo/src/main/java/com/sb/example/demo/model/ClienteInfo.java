@@ -1,5 +1,7 @@
 package com.sb.example.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -8,6 +10,8 @@ import java.util.List;
 @Data
 @Entity
 @Table
+@JsonSerialize(include=JsonSerialize.Inclusion.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ClienteInfo {
 
     @Id

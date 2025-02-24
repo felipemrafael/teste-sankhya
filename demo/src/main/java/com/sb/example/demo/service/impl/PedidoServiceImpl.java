@@ -46,8 +46,7 @@ public class PedidoServiceImpl implements PedidoService {
     }
 
     public Pedido createPedido(Long clienteId, Pedido pedido) throws DoesNotExistException {
-        ClienteInfo cliente = clienteRepository.findById(clienteId).orElseThrow(() -> new DoesNotExistException("Cliente"));
-        pedido.setCliente(cliente);
+        clienteRepository.findById(pedido.getCliente().getId()).orElseThrow(() -> new DoesNotExistException("Cliente"));
         return pedidoRepository.save(pedido);
     }
 

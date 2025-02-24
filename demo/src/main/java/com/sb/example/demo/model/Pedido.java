@@ -1,15 +1,20 @@
 package com.sb.example.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Data;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
 @Entity
 @Table(name = "PEDIDO")
+@JsonSerialize(include=JsonSerialize.Inclusion.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Pedido {
 
     @Id
@@ -26,6 +31,6 @@ public class Pedido {
     private LocalDate dataCompra;
 
     @OneToMany(fetch = FetchType.LAZY)
-    private List<Produto> produtos;
+    private List<Produto> produtos = new ArrayList<>();
 
 }
