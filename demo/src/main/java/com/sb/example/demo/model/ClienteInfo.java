@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -25,8 +26,8 @@ public class ClienteInfo {
 
     private String dtNasc;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "cliente", cascade = CascadeType.ALL)
-    private List<Pedido> pedidoList;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "cliente")
+    private List<Pedido> pedidoList = new ArrayList<>();
 
 
 }
