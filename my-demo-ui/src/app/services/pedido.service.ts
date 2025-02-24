@@ -1,41 +1,36 @@
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-
-import { Pedido } from '../models/pedido';
-
-const headers = new HttpHeaders().set('Content-Type', 'application/json');
-const apiUrl = "/api/pedidos";
+import { HttpClient } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { Observable } from "rxjs";
+import { environment } from "src/environments/environment";
+import { Pedido } from "../models/pedido.model";
 
 @Injectable({
   providedIn: 'root'
 })
-export class PedidoService {
+export class PedidoService{
 
-  constructor(private http: HttpClient) { }
+  resourceUrl = environment.urlBase+"pedidos";
 
-  getPedido(idPedido: number): Observable<Pedido> {
-    return this.http.get<Pedido>(`${apiUrl}/${idPedido}`, {headers});
+  constructor(private http: HttpClient){
   }
 
-  listPedidosByCliente(idCliente: number): Observable<Pedido[]> {
-    return this.http.get<Pedido[]>(`${apiUrl}/cliente/${idCliente}`, {headers});
+  create(pedido: Pedido, idCliente: number): Observable<Pedido>{
+    return this.http.post<Pedido>(`${this.resourceUrl}/cliente/${idCliente}`, pedido);
   }
 
-  listPedidos(): Observable<Pedido[]> {
-    return this.http.get<Pedido[]>(apiUrl, {headers});
+  update(pedido: Pedido, id: number): Observable<Pedido>{
+    return this.http.put<Pedido>(`${this.resourceUrl}/${id}`, pedido);
   }
 
-  createPedido (idCliente: string, pedido: Pedido): Observable<Pedido> {
-    return this.http.post<Pedido>(`${apiUrl}/cliente/${idCliente}`, pedido, {headers});
-  }
-  
-  updatePedido (id: number, pedido: Pedido): Observable<Pedido> {
-    return this.http.put<Pedido>(`${apiUrl}/${id}`, pedido, {headers});
+  getOne(id: number): Observable<Pedido>{
+    return this.http.get<Pedido>(`${this.resourceUrl}/${id}`);
   }
 
-  deletePedido (id: string, order: Pedido): Observable<Pedido> {
-    return this.http.delete<Pedido>(`${apiUrl}/${id}`, {headers});
+  getAll(): Observable<Pedido[]>{
+    return this.http.get<Pedido[]>(this.resourceUrl);
   }
 
+  delete(id: number): Observable<any>{
+    return this.http.delete(`${this.resourceUrl}/${id}`);
+  }
 }

@@ -5,6 +5,7 @@ import lombok.Data;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @Entity
@@ -12,6 +13,7 @@ import java.time.LocalDate;
 public class Pedido {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true, nullable = false)
     private Long id;
 
@@ -19,12 +21,15 @@ public class Pedido {
     @JoinColumn(name = "cliente_id")
     private ClienteInfo cliente;
 
-    private String produtoDesc;
+    private Double totalCompra;
 
-    private LocalDate dataPedido;
+    private LocalDate dataCompra;
 
-    private Integer quantidade;
-
-    private BigDecimal preco;
+    @ManyToMany
+    @JoinTable(name = "produto_pedido",
+            joinColumns = @JoinColumn(name = "produto_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "pedido_id",
+                    referencedColumnName = "id"))
+    private List<Produto> produtos;
 
 }

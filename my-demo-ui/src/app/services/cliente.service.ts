@@ -1,37 +1,36 @@
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-
-import { Cliente } from '../models/cliente';
-
-const headers = new HttpHeaders().set('Content-Type', 'application/json');
-const apiUrl = "/api/clientes";
+import { HttpClient } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { Observable } from "rxjs";
+import { environment } from "src/environments/environment";
+import { Cliente } from "../models/cliente.model";
 
 @Injectable({
   providedIn: 'root'
 })
-export class ClienteService {
+export class ClienteService{
 
-  constructor(private http: HttpClient) { }
+  resourceUrl = environment.urlBase+"clientes";
 
-  getCliente(id: number): Observable<Cliente> {
-    return this.http.get<Cliente>(`${apiUrl}/${id}`, {headers});
+  constructor(private http: HttpClient){
   }
 
-  listClientes(): Observable<Cliente[]> {
-    return this.http.get<Cliente[]>(apiUrl, {headers});
+  create(cliente: Cliente): Observable<Cliente>{
+    return this.http.post<Cliente>(this.resourceUrl, cliente);
   }
 
-  createCliente (cliente: Cliente): Observable<Cliente> {
-    return this.http.post<Cliente>(apiUrl, cliente, {headers});
-  }
-  
-  updateCliente (id: string, cliente: Cliente): Observable<Cliente> {
-    return this.http.put<Cliente>(`${apiUrl}/${id}`, cliente, {headers});
+  update(cliente: Cliente): Observable<Cliente>{
+    return this.http.put<Cliente>(this.resourceUrl, cliente);
   }
 
-  deleteCliente (id: number): Observable<Cliente> {
-    return this.http.delete<Cliente>(`${apiUrl}/${id}`, {headers});
+  getOne(id: number): Observable<Cliente>{
+    return this.http.get<Cliente>(`${this.resourceUrl}/${id}`);
   }
 
+  getAll(): Observable<Cliente[]>{
+    return this.http.get<Cliente[]>(this.resourceUrl);
+  }
+
+  delete(id: number): Observable<any>{
+    return this.http.delete(`${this.resourceUrl}/${id}`);
+  }
 }

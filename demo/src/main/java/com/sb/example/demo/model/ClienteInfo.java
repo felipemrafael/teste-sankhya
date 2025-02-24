@@ -11,18 +11,18 @@ import java.util.List;
 public class ClienteInfo {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true, nullable = false)
     private Long id;
 
     private String nome;
 
-    private String sobrenome;
+    private String cpf;
 
-    private String usuario;
-
-    private String email;
+    private String dtNasc;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "cliente", cascade = CascadeType.ALL)
     private List<Pedido> pedidoList;
+
 
 }

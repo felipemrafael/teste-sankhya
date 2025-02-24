@@ -12,6 +12,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/api", produces = MediaType.APPLICATION_JSON_VALUE)
+@CrossOrigin("*")
 public class ClienteController {
 
     private final ClienteService clienteService;
